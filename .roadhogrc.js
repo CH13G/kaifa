@@ -9,7 +9,6 @@ const svgSpriteDirs = [
 export default {
   entry: 'src/index.js',
   svgSpriteLoaderDirs: svgSpriteDirs,
-  "theme": "./theme.config.js",
   env: {
     development: {
       extraBabelPlugins: [
