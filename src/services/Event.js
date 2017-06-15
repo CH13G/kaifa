@@ -8,6 +8,7 @@ import qs from 'qs';
  * 获取活动详情
  * */
 export async function eventDetail(eventId) {
+  //alert(eventId);
   return request(`${config.baseUrl}/activityDetail.json`, {
     method: 'POST',
     credentials: 'same-origin',mode:"same-origin",
@@ -21,7 +22,6 @@ export async function eventDetail(eventId) {
  * 查询课程
  * */
 export async function getLessonDetail(eventId) {
-  console.log('传参 eventId', eventId);
   return request(`${config.baseUrl}/lessonDetail.json?eventId=${eventId}`, {
     method: 'POST',
     credentials: 'same-origin',
@@ -43,5 +43,20 @@ export async function getNewLesson(eventId) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
         }
+    });
+}
+/*
+ *
+ * 签到
+ * */
+export async function checkIn(info) {
+    return request(`${config.baseUrl}/joinIn.json`, {
+        method: 'POST',
+        credentials: 'same-origin',
+        mode:"same-origin",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
+        body: qs.stringify(info)
     });
 }

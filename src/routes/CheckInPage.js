@@ -8,12 +8,106 @@
 import React from 'react';
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
-
 import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
 class RegisterPage extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      info:{
+        eventId: this.props.location.query.eventId,
+        userName: '',
+        mobile: '',
+      },
+      nameRight: true,
+      mobileRight: true,
+    }
+    this.getName = this.getName.bind(this);
+    this.getPhone = this.getPhone.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.setNameRight = this.setNameRight.bind(this);
+    this.setMobileRight = this.setMobileRight.bind(this);
+  }
+  componentWillMount() {
+    let eventId = this.props.location.query.eventId || '49';
+    //alert(eventId);
+    this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+  }
+    myReplace(str){
+        if(str){
+            return str.replace(/\\n/g,'\n').
+            replace(/\\r/g,'\r').
+            replace(/\\t/g,'\t').
+            replace(/\&amp;/g,'&').
+            replace(/\&quot;/g,'"').
+            replace(/\&lt;/g,'<').
+            replace(/\&gt;/g,'>').
+            replace(/\&hellip;/g,'...').
+            replace(/\&mdash;/g,'--').
+            replace(/\&nbsp;/g,' ').
+            replace(/\&copy;/g,'©').
+            replace(/\&middot;/g,'·').
+            replace(/\&#39;/g,"'").
+            replace(/\&ldquo;/g,'“').
+            replace(/\&rdquo;/g,'”').
+            replace(/\&lsquo;/g,'‘').
+            replace(/\&rsquo;/g,'’').
+            replace(/\\\\;/g,'\\');
+        }
+    };
+    getName(e){
+      const oriInfo = this.state.info;
+      oriInfo.userName = e.target.value;
+      this.setState({
+        info: oriInfo,
+      });
+    }
+    getPhone(e){
+      const oriInfo = this.state.info;
+      oriInfo.mobile = e.target.value;
+      this.setState({
+          info: oriInfo,
+      });
+    }
+    handleSubmit(){
+      const info = this.state.info;
+      if( !info.userName ){
+        this.setState({
+          nameRight: false
+        });
+        return;
+      }this.setState({
+         nameRight: true
+      });
+
+
+      if( !info.mobile ){
+        this.setState({
+          mobileRight: false
+        });
+        return;
+      }else{
+        this.setState({
+          mobileRight: true
+        });
+      }
+      this.props.dispatch({type:'Index/checkIn', info: info});
+    }
+    setNameRight(){
+      this.setState({
+        nameRight: true
+      });
+    }
+    setMobileRight(){
+      this.setState({
+        mobileRight: true
+      });
+    }
   render() {
+    const Item = this.props.Index.eventData.data;
+   // alert(JSON.stringify(Item));
+      console.log('Item', Item);
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
@@ -22,29 +116,44 @@ class RegisterPage extends React.Component {
               签到
             </div>
             <div className={styles.sg_top} id="div_event">
-              <p><span>活动名称：</span>蚂蚁开放日 收钱码业务介绍</p>
-              <p><span>时间：</span>06-19 14:00</p>
-              <p><span>地点：</span>崂山区苗岭路52号巨峰创业大厦11楼1108优客工场</p>
+              <p><span>活动名称：</span>{Item.eventName?this.myReplace(Item.eventName):''}</p>
+              <p><span>时间：</span>{(Item.startTime?new Date(parseInt(Item.startTime, 10)):new Date()).toLocaleString().replace(/\//g, '-')}</p>
+              <p><span>地点：</span>{Item.address?this.myReplace(Item.address):''}</p>
             </div>
             <div id="div_reg">
-
               <div className={styles.sg_in}>
                 <span className={styles.tit}>
                   <em>姓名</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="name" name="name" maxLength="20" />
+                <input
+                    type="text"
+                    className={styles.text}
+                    id="name" name="name"
+                    maxLength="20"
+                    onBlur={ (e) => { this.getName(e); } }
+                    onFocus={ this.setNameRight }
+                    style={this.state.nameRight?{}:{border:'1px solid red'}}
+                />
               </div>
-
+              <div style={{ color:'red', paddingLeft:'25%', display:this.state.nameRight?'none': 'block'}}>请您仔细查看姓名是否填写</div>
               <div className={styles.sg_in}>
                 <span className={styles.tit}>
                   <em>手机</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="phone" name="phone" maxLength="20" />
+                <input
+                    type="text"
+                    className={styles.text}
+                    id="phone" name="phone"
+                    maxLength="20"
+                    onBlur={ (e) => { this.getPhone(e); } }
+                    onFocus={ this.setMobileRight }
+                    style={this.state.mobileRight?{}:{border:'1px solid red'}}
+                />
               </div>
-
-              <input type="submit" className={styles.sg_sub} value="签 到" id="btn_reg" />
+              <div style={{ color:'red', paddingLeft:'25%', display:this.state.mobileRight?'none': 'block'}}>请您仔细查看电话是否填写</div>
+              <input type="button" className={styles.sg_sub} value="签 到" id="btn_reg" onClick={ this.handleSubmit} disabled={this.props.Index.isChecked}/>
             </div>
             <div id="div_baoming" style={{ display: 'none' }}>
               <input type="submit" className={styles.sg_sub} value="提 交" id="btn_baoming" />
@@ -54,11 +163,6 @@ class RegisterPage extends React.Component {
             </div>
           </form>
           <div className={styles.clear} />
-        </div>
-        <div className={Footer.footer} id="footer">
-          <a href="/">活动简介</a>
-          <a href="#/item">活动议程</a>
-          <a id="bm" className={Footer.a3}>已结束</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
