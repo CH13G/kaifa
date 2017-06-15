@@ -19,7 +19,7 @@ class RegisterPage extends React.Component {
         <div className={styles.wrap94}>
           <form id="form1">
             <div className={styles.sg_title}>
-              立即报名
+              签到
             </div>
             <div className={styles.sg_top} id="div_event">
               <p><span>活动名称：</span>蚂蚁开放日 收钱码业务介绍</p>
