@@ -20,6 +20,13 @@ class VideoPage extends React.Component {
       this.props.dispatch({ type: 'Index/getLessonDetail', eventId });
       this.props.dispatch({ type: 'Index/getNewLesson' });
     }
+    window.addEventListener('hashchange', (e)=> {
+      // hash值发生改变
+      eventId = this.props.location.query.eventId || '49';
+      type = this.props.location.query.type || 'event';
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId: eventId });
+      this.props.dispatch({ type: 'Index/getNewLesson'});
+    }, false);
   }
 
   componentDidMount() {
@@ -89,8 +96,15 @@ class VideoPage extends React.Component {
           </div>
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
-          <a href={`#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
+          {
+            Item.activityId ? <a href={`#/?eventId=${ Item.activityId }`} >活动简介</a> :
+              <a href="javascript:void(0)">活动简介</a>
+          }
+          {
+            Item.activityId ? <a href={`#/item?eventId=${ Item.activityId}`}>活动议程</a> :
+              <a href="javascript:void(0)">活动议程</a>
+          }
+
           {
             type == 'event' ? (
                 Item.status == 'FINISHED' ? <a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a> :

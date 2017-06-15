@@ -4,7 +4,8 @@
 import {
   eventDetail,
   getLessonDetail,
-  getNewLesson
+  getNewLesson,
+  checkIn
 } from "../services/Event";
 export default {
   namespace: 'Index',
@@ -17,7 +18,8 @@ export default {
       lessonId: '',
       data:{}
     },
-    lessonList:[]
+    lessonList:[],
+    isChecked: false,
   },
   reducers: {
     setState(state, action) {
@@ -28,6 +30,7 @@ export default {
     *getEventDetail(action, {put, call}){
       //alert('action', JSON.stringify( action ));
       console.log('action',action);
+     // alert(action.eventId);
       if(action.eventId){
         const data =yield call(eventDetail, action.eventId);
         if( data.data.status === '0000' ) {
@@ -47,7 +50,6 @@ export default {
       }
     },
     *getLessonDetail(action, { put, call }) {
-      console.log('准备调用接口', action);
       const data = yield call(getLessonDetail, action.eventId);
       console.log('data', data);
       if(data){
@@ -81,6 +83,54 @@ export default {
               // alert(2222)
               // 数据请求失败 返回一个处理页面
           }
+      }
+    },
+    *checkIn(action, { put, call }){
+      let data;
+      try{
+        data = yield call(checkIn, action.info);
+      }catch (e){
+          yield put({
+              type: "setState",
+              isChecked: false
+          });
+        alert('后台出错，请您刷新后重试，或者检查您的网络是否连接！');
+      }
+      if(data){
+        if(data.data.status == "3003"){
+            yield put({
+                type: "setState",
+                isChecked: true
+            });
+            alert('您已成功签到，请不要重复签到！');
+        }
+        if(data.data.status == "0000"){
+            yield put({
+                type: "setState",
+                isChecked: true
+            });
+            alert('恭喜您，您已成功签到！');
+        }
+        if(data.data.status == "3002"){
+            yield put({
+                type: "setState",
+                isChecked: false
+            });
+            alert('签到失败，请您确认是否报名该活动，并已审核通过！');
+        }
+        if(data.data.status == "2002"){
+            yield put({
+                type: "setState",
+                isChecked: false
+            });
+          alert('签到失败，请您仔细核对填写的信息!');
+        }
+      }else{
+          yield put({
+              type: "setState",
+              isChecked: false
+          });
+        alert('后台出错，请您刷新后重试，或者检查您的网络是否连接！');
       }
     }
   },
