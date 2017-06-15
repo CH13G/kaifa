@@ -1,6 +1,7 @@
 /**
  * Created by wb-mjy275902 on 2017/6/14.
  */
+import { insert, selectActivity, selectUser } from '../services/Register';
 
 export default {
   namespace: 'Register',
@@ -12,6 +13,9 @@ export default {
     company: '',
     job_role: '',
     province: '',
+    city: '',
+    activityDetail: {},
+    userDetail: {},
   },
   reducers: {
     setState(state, action) {
@@ -19,7 +23,29 @@ export default {
     },
   },
   effects: {
-
+    *submitForm(action, { call }) {
+      const data = yield call(insert, action.data);
+    },
+    *getActivityInfo(action, { put, call }) {
+      const data = yield call(selectActivity, action.eventId);
+      if (data.status === '0000') {
+        yield put({ type: 'setState', activityDetail: data.data });
+      }
+    },
+    *getUserInfo(action, { put, call }) {
+      const data = yield call(selectActivity);
+      if (data.data !== null) {
+        yield put({ type: 'setState', userDetail: data.data });
+      }
+    },
   },
-  subscriptions: {},
+  subscriptions: {
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname === '/register') {
+          dispatch({ type: 'getUserInfo' });
+        }
+      });
+    },
+  },
 };

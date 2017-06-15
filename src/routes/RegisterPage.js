@@ -1,65 +1,64 @@
 /**
  * Created by wb-zgy269023 on 2017/6/12.
  */
-/* eslint-disable no-plusplus, global-require */
 import React from 'react';
 import { connect } from 'dva';
-import { createForm } from 'rc-form';
 
 import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
-let eventId = '49';
-let type = 'event';
 class RegisterPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentWillMount() {
-    eventId = this.props.location.query.eventId || '49';
-    type = this.props.location.query.type || 'event';
-    // alert(eventId);
-    // alert(type);
-    console.log('eventId', eventId, 'type', type);
-    this.props.dispatch({ type: 'Index/getEventDetail', eventId });
-  }
-  myReplace(str) {
-    if (str) {
-      return str.replace(/\\n/g, '\n')
-      .replace(/\\r/g, '\r')
-      .replace(/\\t/g, '\t')
-      .replace(/\&amp;/g, '&')
-      .replace(/\&quot;/g, '"')
-      .replace(/\&lt;/g, '<')
-      .replace(/\&gt;/g, '>')
-      .replace(/\&hellip;/g, '...')
-      .replace(/\&mdash;/g, '--')
-      .replace(/\&nbsp;/g, ' ')
-      .replace(/\&copy;/g, '©')
-      .replace(/\&middot;/g, '·')
-      .replace(/\&#39;/g, "'")
-      .replace(/\&ldquo;/g, '“')
-      .replace(/\&rdquo;/g, '”')
-      .replace(/\&lsquo;/g, '‘')
-      .replace(/\&rsquo;/g, '’')
-      .replace(/\\\\;/g, '\\');
+  setData = (e) => {
+    switch (e.target.name) {
+      case 'province':
+        this.props.dispatch({ type: 'Register/setState', province: e.target.value });
+        break;
+      case 'job_role':
+        this.props.dispatch({ type: 'Register/setState', job_role: e.target.value });
+        break;
+      case 'name':
+        this.props.dispatch({ type: 'Register/setState', name: e.target.value });
+        break;
+      case 'phone':
+        this.props.dispatch({ type: 'Register/setState', phone: e.target.value });
+        break;
+      case 'email':
+        this.props.dispatch({ type: 'Register/setState', email: e.target.value });
+        break;
+      case 'industry':
+        this.props.dispatch({ type: 'Register/setState', industry: e.target.value });
+        break;
+      case 'company':
+        this.props.dispatch({ type: 'Register/setState', company: e.target.value });
+        break;
+      case 'city':
+        this.props.dispatch({ type: 'Register/setState', city: e.target.value });
+        break;
+      default:
+        break;
     }
   }
+  submit = (e) => {
+    e.preventDefault();
+    this.props.dispatch({ type: 'Register/submitForm', data: this.props.Register });
+  }
   render() {
-    const Item = this.props.Index.eventData.data;
+    console.log(this.props);
+    const { Register } = this.props;
+    // const Item = this.props.Index.eventData.data;
     // alert(Item);
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
-          <form id="form">
+          <form id="form" onSubmit={this.submit}>
             <div className={styles.sg_title}>
               立即报名
             </div>
             <div className={styles.sg_top} id="div_event">
 
-              <p><span>活动名称：</span>{Item.eventName ? this.myReplace(Item.eventName) : ''}</p>
-              <p><span>时间：</span>{(Item.startTime ? new Date(parseInt(Item.startTime, 10)) : new Date()).toLocaleString().replace(/\//g, '-')}</p>
-              <p><span>地点：</span>{Item.address ? this.myReplace(Item.address) : ''}</p>
+              <p><span>活动名称：</span>{Register.activityDetail.eventName || ''}</p>
+              <p><span>时间：</span>{Register.activityDetail.eventName ? new Date(Register.activityDetail.startTime) : ''}</p>
+              <p><span>地点：</span>{Register.activityDetail.address || ''}</p>
             </div>
             <div id="div_reg">
 
@@ -68,7 +67,7 @@ class RegisterPage extends React.Component {
                   <em>姓名</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="name" name="name" maxLength="20" />
+                <input type="text" className={styles.text} id="name" name="name" maxLength="20" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -76,7 +75,7 @@ class RegisterPage extends React.Component {
                   <em>手机</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="phone" name="phone" maxLength="20" />
+                <input type="text" className={styles.text} id="phone" name="phone" maxLength="20" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -84,7 +83,7 @@ class RegisterPage extends React.Component {
                   <em>邮箱</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="email" name="email" maxLength="50" />
+                <input type="text" className={styles.text} id="email" name="email" maxLength="50" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -93,7 +92,7 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="industry" name="industry">
+                  <select id="industry" name="industry" onChange={this.setData} required >
                     <option value="">请选择</option>
                     <option value="互联网">互联网</option>
                     <option value="游戏">游戏</option>
@@ -121,7 +120,7 @@ class RegisterPage extends React.Component {
                     <option value="金融/财税">金融/财税</option>
                     <option value="其他">其他</option>
                   </select>
-                  <span className={styles.mh_val}>请选择</span>
+                  <span className={styles.mh_val}>{this.props.Register.industry || '请选择所属行业'}</span>
                 </div>
               </div>
 
@@ -130,7 +129,7 @@ class RegisterPage extends React.Component {
                   <em>公司名称</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="company" name="company" maxLength="255" />
+                <input type="text" className={styles.text} id="company" name="company" onChange={this.setData} maxLength="255" required />
               </div>
 
               <div className={styles.sg_in}>
@@ -139,7 +138,7 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="job_role" name="job_role">
+                  <select id="job_role" name="job_role" onChange={this.setData} required >
                     <option value="">请选择</option>
                     <option value="总经理">总经理</option>
                     <option value="开发/测试">开发/测试</option>
@@ -152,7 +151,7 @@ class RegisterPage extends React.Component {
                     <option value="产品">产品</option>
                     <option value="其它">其它</option>
                   </select>
-                  <span className={styles.mh_val}>请选择</span>
+                  <span className={styles.mh_val}>{this.props.Register.job_role || '请选择职位'}</span>
                 </div>
               </div>
 
@@ -162,9 +161,8 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="province" name="province" onChange={this.selectProvince.bind(this)}>
-                    <option value="">请选择省份</option>
-                    <option>北京市</option>
+                  <select name="province" onChange={this.setData}>
+                    <option key={'北京市'} value={'北京市'}>北京市</option>
                     <option>天津市</option>
                     <option>上海市</option>
                     <option>重庆市</option>
@@ -199,17 +197,21 @@ class RegisterPage extends React.Component {
                     <option>香港特别行政区</option>
                     <option>澳门特别行政区</option>
                   </select>
-                  <span className={styles.mh_val}>请选择省份</span>
+                  <span className={styles.mh_val}>{this.props.Register.province || '请选择省份'}</span>
                 </div>
               </div>
 
               <div className={styles.sg_in}>
                 <span className={styles.tit} />
                 <div className={styles.mh_select}>
-                  <select id="city" name="city">
+                  <select id="city" name="city" onChange={this.setData}>
                     <option value="">请选择城市</option>
+                    {this.props.Register.province
+                      ? <option>{this.props.Register.province}</option>
+                      : ''
+                    }
                   </select>
-                  <span className={styles.mh_val}>请选择城市</span>
+                  <span className={styles.mh_val}>{this.props.Register.city || '请选择城市'}</span>
                 </div>
               </div>
               <input type="submit" className={styles.sg_sub} value="提 交" id="btn_reg" />
@@ -221,9 +223,9 @@ class RegisterPage extends React.Component {
           <div className={styles.clear} />
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
-          <a href={`#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
-          <a href={`#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
+          <a href={`/#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
+          <a href={`/#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
+          <a href={`/#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
