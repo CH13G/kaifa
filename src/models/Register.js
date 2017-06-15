@@ -28,12 +28,12 @@ export default {
     },
     *getActivityInfo(action, { put, call }) {
       const data = yield call(selectActivity, action.eventId);
-      if (data.status === '0000') {
-        yield put({ type: 'setState', activityDetail: data.data });
+      if (data.data.status === '0000') {
+        yield put({ type: 'setState', activityDetail: data.data.data });
       }
     },
     *getUserInfo(action, { put, call }) {
-      const data = yield call(selectActivity);
+      const data = yield call(selectUser);
       if (data.data !== null) {
         yield put({ type: 'setState', userDetail: data.data });
       }

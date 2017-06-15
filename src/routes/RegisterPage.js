@@ -7,7 +7,18 @@ import { connect } from 'dva';
 import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
+let eventId = '49';
+let type = 'event';
 class RegisterPage extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  componentWillMount() {
+    eventId = this.props.location.query.eventId || '49';
+    type = this.props.location.query.type || 'event';
+    this.props.dispatch({ type: 'Register/getActivityInfo', eventId: eventId });
+    this.props.dispatch({ type: 'Register/getUserInfo' });
+  }
   setData = (e) => {
     switch (e.target.name) {
       case 'province':
@@ -40,13 +51,39 @@ class RegisterPage extends React.Component {
   }
   submit = (e) => {
     e.preventDefault();
-    this.props.dispatch({ type: 'Register/submitForm', data: this.props.Register });
+    this.props.dispatch({ type: 'Register/submitForm', data: { eventId: eventId, ...this.props.Register } });
   }
+  myReplace(str){
+      if(str){
+          return str.replace(/\\n/g,'\n').
+          replace(/\\r/g,'\r').
+          replace(/\\t/g,'\t').
+          replace(/\&amp;/g,'&').
+          replace(/\&quot;/g,'"').
+          replace(/\&lt;/g,'<').
+          replace(/\&gt;/g,'>').
+          replace(/\&hellip;/g,'...').
+          replace(/\&mdash;/g,'--').
+          replace(/\&nbsp;/g,' ').
+          replace(/\&copy;/g,'©').
+          replace(/\&middot;/g,'·').
+          replace(/\&#39;/g,"'").
+          replace(/\&ldquo;/g,'“').
+          replace(/\&rdquo;/g,'”').
+          replace(/\&lsquo;/g,'‘').
+          replace(/\&rsquo;/g,'’').
+          replace(/\\\\;/g,'\\');
+      }
+  };
   render() {
     console.log(this.props);
     const { Register } = this.props;
     // const Item = this.props.Index.eventData.data;
     // alert(Item);
+    //  activityDetail: {},
+    //   userDetail: {},
+      console.log('Register', Register);
+
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
@@ -56,12 +93,11 @@ class RegisterPage extends React.Component {
             </div>
             <div className={styles.sg_top} id="div_event">
 
-              <p><span>活动名称：</span>{Register.activityDetail.eventName || ''}</p>
-              <p><span>时间：</span>{Register.activityDetail.eventName ? new Date(Register.activityDetail.startTime) : ''}</p>
-              <p><span>地点：</span>{Register.activityDetail.address || ''}</p>
+              <p><span>活动名称：</span>{this.myReplace(Register.activityDetail.eventName) || ''}</p>
+              <p><span>时间：</span>{Register.activityDetail.eventName ? new Date(Register.activityDetail.startTime).toLocaleString() : ''}</p>
+              <p><span>地点：</span>{this.myReplace(Register.activityDetail.address) || ''}</p>
             </div>
             <div id="div_reg">
-
               <div className={styles.sg_in}>
                 <span className={styles.tit}>
                   <em>姓名</em>

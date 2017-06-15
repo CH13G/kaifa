@@ -4,7 +4,7 @@ import config from '../utils/config';
 
 
 export async function insert(data) {
-  return request(`${config.baseUrl}/anttalk/signuprequestInsertOrUpdate.json`, {
+  return request(`${config.baseUrl}/signuprequestInsertOrUpdate.json`, {
     method: 'POST',
     credentials: 'same-origin',
     mode: 'same-origin',
@@ -15,7 +15,7 @@ export async function insert(data) {
   });
 }
 export async function selectActivity(eventId) {
-  return request(`${config.baseUrl}/anttalk/activityDetail.json`, {
+  return request(`${config.baseUrl}/activityDetail.json`, {
     method: 'POST',
     credentials: 'same-origin',
     mode: 'same-origin',
@@ -26,7 +26,7 @@ export async function selectActivity(eventId) {
   });
 }
 export async function selectUser() {
-  return request(`${config.baseUrl}/anttalk/userDetail.json`, {
+  return request(`${config.baseUrl}/userDetail.json`, {
     method: 'POST',
     credentials: 'same-origin',
     mode: 'same-origin',
