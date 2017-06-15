@@ -10,26 +10,29 @@ import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
 class RegisterPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
   componentWillMount() {
-    let eventId = this.props.location.query.eventId || '49';
-    this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+    const eventId = this.props.location.query.eventId || '49';
+    this.props.dispatch({ type: 'Index/getEventDetail', eventId });
+  }
+  selectProvince(value) {
+    this.props.dispatch({ type: 'Register/setState', province: value });
   }
   render() {
     const Item = this.props.Index.eventData.data;
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
-          <form id="form1">
+          <form id="form">
             <div className={styles.sg_title}>
               立即报名
             </div>
             <div className={styles.sg_top} id="div_event">
               <p><span>活动名称：</span>{Item.eventName}</p>
-              <p><span>时间：</span>{(Item.startTime?new Date(parseInt(Item.startTime, 10)):new Date()).toLocaleString().replace(/\//g, '-')}</p>
-              <p><span>地点：</span>{Item.address?Item.address:''}</p>
+              <p><span>时间：</span>{(Item.startTime ? new Date(parseInt(Item.startTime, 10)) : new Date()).toLocaleString().replace(/\//g, '-')}</p>
+              <p><span>地点：</span>{Item.address ? Item.address : ''}</p>
             </div>
             <div id="div_reg">
 
@@ -132,7 +135,7 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="province" name="province">
+                  <select id="province" name="province" onChange={this.selectProvince.bind(this)}>
                     <option value="">请选择省份</option>
                     <option>北京市</option>
                     <option>天津市</option>
@@ -184,9 +187,6 @@ class RegisterPage extends React.Component {
               </div>
               <input type="submit" className={styles.sg_sub} value="提 交" id="btn_reg" />
             </div>
-            <div id="div_baoming" style={{ display: 'none' }}>
-              <input type="submit" className={styles.sg_sub} value="提 交" id="btn_baoming" />
-            </div>
             <div id="div_yibaoming" style={{ display: 'none', textAlign: 'center', color: 'green' }}>
               您已经报名此活动
             </div>
@@ -194,9 +194,9 @@ class RegisterPage extends React.Component {
           <div className={styles.clear} />
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${ this.props.location.query.eventId}`} >活动简介</a>
-          <a href={`#/item?eventId=${ this.props.location.query.eventId}`}>活动议程</a>
-          <a href={`#/register?eventId=${ this.props.location.query.eventId}`}  className={Footer.hover}>立即报名</a>
+          <a href={`#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
+          <a href={`#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
+          <a href={`#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
