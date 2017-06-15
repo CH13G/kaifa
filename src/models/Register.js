@@ -5,9 +5,18 @@
 export default {
   namespace: 'Register',
   state: {
-
+    name: '',
+    phone: '',
+    email: '',
+    industry: '',
+    company: '',
+    job_role: '',
+    province: '',
   },
   reducers: {
+    setState(state, action) {
+      return { ...state, ...action };
+    },
   },
   effects: {
 
