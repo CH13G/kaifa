@@ -10,10 +10,10 @@ function RouterConfig({ browserHistory }) {
   return (
     <Router history={browserHistory}>
       <Route path="/" component={IndexPage} />
-      <Route path="item" component={ItemsPage} />
-      <Route path="video" component={VideoPage} />
-      <Route path="register" component={RegisterPage} />
-      <Route path="checkin" component={CheckInPage} />
+      <Route path="/item" component={ItemsPage} />
+      <Route path="/video" component={VideoPage} />
+      <Route path="/register" component={RegisterPage} />
+      <Route path="/checkin" component={CheckInPage} />
     </Router>
   );
 }

@@ -6,12 +6,12 @@ import { insert, selectActivity, selectUser } from '../services/Register';
 export default {
   namespace: 'Register',
   state: {
-    name: '',
-    phone: '',
+    userName: '',
+    mobile: '',
     email: '',
-    industry: '',
+    profession: '',
     company: '',
-    job_role: '',
+    title: '',
     province: '',
     city: '',
     activityDetail: {},
@@ -35,7 +35,7 @@ export default {
     *getUserInfo(action, { put, call }) {
       const data = yield call(selectUser);
       if (data.data !== null) {
-        yield put({ type: 'setState', userDetail: data.data });
+        yield put({ type: 'setState', userDetail: data.data.data });
       }
     },
   },

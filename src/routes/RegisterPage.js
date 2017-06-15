@@ -24,20 +24,20 @@ class RegisterPage extends React.Component {
       case 'province':
         this.props.dispatch({ type: 'Register/setState', province: e.target.value });
         break;
-      case 'job_role':
-        this.props.dispatch({ type: 'Register/setState', job_role: e.target.value });
+      case 'title':
+        this.props.dispatch({ type: 'Register/setState', title: e.target.value });
         break;
-      case 'name':
-        this.props.dispatch({ type: 'Register/setState', name: e.target.value });
+      case 'userName':
+        this.props.dispatch({ type: 'Register/setState', userName: e.target.value });
         break;
-      case 'phone':
-        this.props.dispatch({ type: 'Register/setState', phone: e.target.value });
+      case 'mobile':
+        this.props.dispatch({ type: 'Register/setState', mobile: e.target.value });
         break;
       case 'email':
         this.props.dispatch({ type: 'Register/setState', email: e.target.value });
         break;
-      case 'industry':
-        this.props.dispatch({ type: 'Register/setState', industry: e.target.value });
+      case 'profession':
+        this.props.dispatch({ type: 'Register/setState', profession: e.target.value });
         break;
       case 'company':
         this.props.dispatch({ type: 'Register/setState', company: e.target.value });
@@ -83,7 +83,6 @@ class RegisterPage extends React.Component {
     //  activityDetail: {},
     //   userDetail: {},
       console.log('Register', Register);
-
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
@@ -103,7 +102,7 @@ class RegisterPage extends React.Component {
                   <em>姓名</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="name" name="name" maxLength="20" onChange={this.setData} required />
+                <input type="text" className={styles.text} name="userName" maxLength="20" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -111,7 +110,7 @@ class RegisterPage extends React.Component {
                   <em>手机</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="phone" name="phone" maxLength="20" onChange={this.setData} required />
+                <input type="text" className={styles.text} name="mobile" maxLength="20" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -119,7 +118,7 @@ class RegisterPage extends React.Component {
                   <em>邮箱</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="email" name="email" maxLength="50" onChange={this.setData} required />
+                <input type="text" className={styles.text} name="email" maxLength="50" onChange={this.setData} required />
               </div>
 
               <div className={styles.sg_in}>
@@ -128,7 +127,7 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="industry" name="industry" onChange={this.setData} required >
+                  <select name="profession" onChange={this.setData} required >
                     <option value="">请选择</option>
                     <option value="互联网">互联网</option>
                     <option value="游戏">游戏</option>
@@ -156,7 +155,7 @@ class RegisterPage extends React.Component {
                     <option value="金融/财税">金融/财税</option>
                     <option value="其他">其他</option>
                   </select>
-                  <span className={styles.mh_val}>{this.props.Register.industry || '请选择所属行业'}</span>
+                  <span className={styles.mh_val}>{this.props.Register.profession || '请选择所属行业'}</span>
                 </div>
               </div>
 
@@ -165,7 +164,7 @@ class RegisterPage extends React.Component {
                   <em>公司名称</em>
                   <i>*</i>
                 </span>
-                <input type="text" className={styles.text} id="company" name="company" onChange={this.setData} maxLength="255" required />
+                <input type="text" className={styles.text} name="company" onChange={this.setData} maxLength="255" required />
               </div>
 
               <div className={styles.sg_in}>
@@ -174,7 +173,7 @@ class RegisterPage extends React.Component {
                   <i>*</i>
                 </span>
                 <div className={styles.mh_select}>
-                  <select id="job_role" name="job_role" onChange={this.setData} required >
+                  <select name="title" onChange={this.setData} required >
                     <option value="">请选择</option>
                     <option value="总经理">总经理</option>
                     <option value="开发/测试">开发/测试</option>
@@ -187,7 +186,7 @@ class RegisterPage extends React.Component {
                     <option value="产品">产品</option>
                     <option value="其它">其它</option>
                   </select>
-                  <span className={styles.mh_val}>{this.props.Register.job_role || '请选择职位'}</span>
+                  <span className={styles.mh_val}>{this.props.Register.title || '请选择职位'}</span>
                 </div>
               </div>
 
@@ -240,7 +239,7 @@ class RegisterPage extends React.Component {
               <div className={styles.sg_in}>
                 <span className={styles.tit} />
                 <div className={styles.mh_select}>
-                  <select id="city" name="city" onChange={this.setData}>
+                  <select name="city" onChange={this.setData}>
                     <option value="">请选择城市</option>
                     {this.props.Register.province
                       ? <option>{this.props.Register.province}</option>
@@ -259,9 +258,9 @@ class RegisterPage extends React.Component {
           <div className={styles.clear} />
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`/#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
-          <a href={`/#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
-          <a href={`/#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
+          <a href={`#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
+          <a href={`#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
+          <a href={`#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
