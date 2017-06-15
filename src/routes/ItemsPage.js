@@ -6,22 +6,54 @@ import styles from './IndexPage.less';
 import Footer from './footer.less';
 
 
-class MobileDemo extends React.Component {
+class ItemsPage extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  componentWillMount() {
+    let eventId = this.props.location.query.eventId || '49';
+    this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+  }
+  myReplace(str){
+    if(str){
+      return str.replace(/\\n/g,'\n').
+      replace(/\\r/g,'\r').
+      replace(/\\t/g,'\t').
+      replace(/\&amp;/g,'&').
+      replace(/\&quot;/g,'"').
+      replace(/\&lt;/g,'<').
+      replace(/\&gt;/g,'>').
+      replace(/\&hellip;/g,'...').
+      replace(/\&mdash;/g,'--').
+      replace(/\&nbsp;/g,' ').
+      replace(/\&copy;/g,'©').
+      replace(/\&middot;/g,'·').
+      replace(/\&#39;/g,"'").
+      replace(/\&ldquo;/g,'“').
+      replace(/\&rdquo;/g,'”').
+      replace(/\&lsquo;/g,'‘').
+      replace(/\&rsquo;/g,'’').
+      replace(/\\\\;/g,'\\');
+    }
+  }
   render() {
+    console.log('活动的详细信息', this);
+    const Item = this.props.Index.eventData.data;
     return (
       <div>
         <div className={styles.banner}>
           <img
             alt=""
-            src="https://jinmajiang.oss-cn-beijing.aliyuncs.com/image/20161219160639_7757.jpg"
+            src={Item.imageIi?Item.imageIi:''}
             id="v_event_banner"
           />
         </div>
         <div className={styles.top}>
-          <div className={styles.title} id="v_event_name">今蚂讲开发者公开课之开放技术专场</div>
+          <div className={styles.title} id="v_event_name">{Item.eventName?Item.eventName:''}</div>
           <div className={styles.pos}>
             <img alt="" src="http://event.open.alipay.com/anttalk/M/images/ab2_pos.png" className={styles.ico} />
-            <span id="v_event_address">蚂蚁金服总部，杭州市西湖区万塘路18号黄龙时代广场B座14层 527会议室</span>
+            <span id="v_event_address">{Item.address?Item.address:''}</span>
           </div>
           <a href="#/video" className={styles.play} id="v_view">在线观看</a>
           <div className={styles.clear} />
@@ -35,29 +67,25 @@ class MobileDemo extends React.Component {
                 className={styles.ico}
               />活动议程
             </div>
-            <div className={styles.inf}>
-              14:00 蚂蚁模式：医疗行业解决方案
-              <br />
-              逍然 蚂蚁金服支付宝医疗总经理
-              <br />
-              <br />
-              14:30 蚂蚁金服开放平台
-              <br />
-              秉烛 蚂蚁金服支付宝开放平台技术专家
+            <div className={styles.inf} dangerouslySetInnerHTML={{__html: this.myReplace(Item.activityFlow)}}>
             </div>
             <div className={styles.clear} />
           </div>
         </div>
         <div className={Footer.footer} id="footer">
-          <a href="/">活动简介</a>
-          <a href="#/item" className={Footer.hover}>活动议程</a>
-          <a id="bm" className={Footer.a3}>已结束</a>
+          <a href={`#/?eventId=${ this.props.location.query.eventId}`} >活动简介</a>
+          <a href={`#/item?eventId=${ this.props.location.query.eventId}`} className={Footer.hover}>活动议程</a>
+          {
+            Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:
+              <a href={`#/register?eventId=${ this.props.location.query.eventId}`}>立即报名</a>
+          }
         </div>
         <div className={Footer.footer_zw} />
       </div>
     );
   }
 }
-
-const MobileDemoWrapper = createForm()(MobileDemo);
-export default connect()(MobileDemoWrapper);
+const mapStateToProps = (state) => {
+  return { ...state };
+};
+export default connect(mapStateToProps)(ItemsPage);

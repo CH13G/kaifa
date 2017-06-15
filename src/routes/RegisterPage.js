@@ -9,28 +9,27 @@ import { createForm } from 'rc-form';
 import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
-class MobileDemo extends React.Component {
+class RegisterPage extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  componentWillMount() {
+    let eventId = this.props.location.query.eventId || '49';
+    this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+  }
   render() {
+    const Item = this.props.Index.eventData.data;
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
           <form id="form1">
-            {/* <input type="hidden" id="alipay_user_id" name="alipay_user_id"*/}
-            {/* value="05A4C29C837C140375D4542CD4082830A7ED0286E7542682">*/}
-            {/* <input type="hidden" id="alipay_nick_name" name="alipay_nick_name" value="广友">*/}
-            {/* <input type="hidden" id="alipay_avatar" name="alipay_avatar"*/}
-            {/* value="https://tfs.alipayobjects.com/images/partner/T1dc4zXnVaXXXXXXXX">*/}
-
-            {/* <input type="hidden" id="event_id" name="event_id" value="49">*/}
-            {/* <input type="hidden" id="user_id" name="user_id" value="">*/}
-
             <div className={styles.sg_title}>
               立即报名
             </div>
             <div className={styles.sg_top} id="div_event">
-              <p><span>活动名称：</span>蚂蚁开放日 收钱码业务介绍</p>
-              <p><span>时间：</span>06-19 14:00</p>
-              <p><span>地点：</span>崂山区苗岭路52号巨峰创业大厦11楼1108优客工场</p>
+              <p><span>活动名称：</span>{Item.eventName}</p>
+              <p><span>时间：</span>{(Item.startTime?new Date(parseInt(Item.startTime, 10)):new Date()).toLocaleString().replace(/\//g, '-')}</p>
+              <p><span>地点：</span>{Item.address?Item.address:''}</p>
             </div>
             <div id="div_reg">
 
@@ -195,9 +194,9 @@ class MobileDemo extends React.Component {
           <div className={styles.clear} />
         </div>
         <div className={Footer.footer} id="footer">
-          <a href="/">活动简介</a>
-          <a href="#/item">活动议程</a>
-          <a id="bm" className={Footer.a3}>已结束</a>
+          <a href={`#/?eventId=${ this.props.location.query.eventId}`} >活动简介</a>
+          <a href={`#/item?eventId=${ this.props.location.query.eventId}`}>活动议程</a>
+          <a href={`#/register?eventId=${ this.props.location.query.eventId}`}  className={Footer.hover}>立即报名</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
@@ -205,5 +204,7 @@ class MobileDemo extends React.Component {
   }
 }
 
-const MobileDemoWrapper = createForm()(MobileDemo);
-export default connect()(MobileDemoWrapper);
+const mapStateToProps = (state) => {
+  return { ...state };
+};
+export default connect(mapStateToProps)(RegisterPage);

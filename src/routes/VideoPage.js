@@ -6,8 +6,16 @@ import { createForm } from 'rc-form';
 import styles from './VideoPage.less';
 import Footer from './footer.less';
 
-class MobileDemo extends React.Component {
+class VideoPage extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  componentWillMount() {
+    let eventId = this.props.location.query.eventId || '49';
+    this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+  }
   render() {
+    const Item = this.props.Index.eventData.data;
     return (
       <div className={styles.bg_white}>
         <div id="youkuplayer" className={styles.video_play} style={{ width: '100%', height: '180px' }} />
@@ -42,14 +50,18 @@ class MobileDemo extends React.Component {
           </div>
         </div>
         <div className={Footer.footer} id="footer">
-          <a href="/">活动简介</a>
-          <a href="#/item">活动议程</a>
-          <a id="bm" className={Footer.a3}>已结束</a>
+          <a href={`#/?eventId=${ this.props.location.query.eventId}`} className={Footer.hover}>活动简介</a>
+          <a href={`#/item?eventId=${ this.props.location.query.eventId}`}>活动议程</a>
+          {
+            Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:''
+          }
         </div>
         <div className={Footer.footer_zw} />
       </div>);
   }
 }
 
-const MobileDemoWrapper = createForm()(MobileDemo);
-export default connect()(MobileDemoWrapper);
+const mapStateToProps = (state) => {
+  return { ...state };
+};
+export default connect(mapStateToProps)(VideoPage);
