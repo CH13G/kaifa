@@ -28,11 +28,9 @@ export default {
   },
   effects: {
     *getEventDetail(action, {put, call}){
-      //alert('action', JSON.stringify( action ));
-      console.log('action',action);
-     // alert(action.eventId);
       if(action.eventId){
         const data =yield call(eventDetail, action.eventId);
+        console.log('获取活动详情', data);
         if( data.data.status === '0000' ) {
           // alert(1111)
           yield put({

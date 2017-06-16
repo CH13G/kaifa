@@ -5,7 +5,6 @@ import React from 'react';
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
 import qs from 'qs';
-
 import styles from './RegisterPage.less';
 import Footer from './footer.less';
 
@@ -14,6 +13,7 @@ let type = 'event';
 class RegisterPage extends React.Component {
   componentWillMount() {
     type = this.props.location.query.type || 'event';
+    eventId = this.props.location.query.eventId;
     this.props.dispatch({ type: 'Register/getActivityInfo', eventId });
   }
   setData = (e) => {
@@ -299,9 +299,9 @@ class RegisterPage extends React.Component {
           <div className={styles.clear} />
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${this.props.location.query.eventId}`} >活动简介</a>
-          <a href={`#/item?eventId=${this.props.location.query.eventId}`}>活动议程</a>
-          <a href={`#/register?eventId=${this.props.location.query.eventId}`} className={Footer.hover}>立即报名</a>
+          <a href={`#/?eventId=${eventId}&type=${type}`} >活动简介</a>
+          <a href={`#/item?eventId=${eventId}&type=${type}`}>活动议程</a>
+          <a href={`#/register?eventId=${eventId}&type=${type}`} className={Footer.hover}>立即报名</a>
         </div>
         <div className={Footer.footer_zw} />
       </div>
