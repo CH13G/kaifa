@@ -25,6 +25,9 @@ export default {
   effects: {
     *submitForm(action, { call }) {
       const data = yield call(insert, action.data);
+      if( data ){
+        action.callback(data.data.status == '0000');
+      }
     },
     *getActivityInfo(action, { put, call }) {
       const data = yield call(selectActivity, action.eventId);

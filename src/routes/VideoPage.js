@@ -5,40 +5,40 @@ import { createForm } from 'rc-form';
 import styles from './VideoPage.less';
 import Footer from './footer.less';
 
-let eventId = '49';
-let type = 'event';
+let eventId = '';
+let type = 'lesson';
 class VideoPage extends React.Component {
   constructor(props) {
     super(props);
+    this.createPlayer = this.createPlayer.bind( this );
   }
   componentWillMount() {
-    eventId = this.props.location.query.eventId || '49';
-    type = this.props.location.query.type || 'event';
+    eventId = this.props.location.query.eventId || '';
+    type = this.props.location.query.type || 'lesson';
     if (type == 'event') {
       this.props.dispatch({ type: 'Index/getEventDetail', eventId });
     } else {
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId });
       this.props.dispatch({ type: 'Index/getNewLesson' });
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: this.createPlayer});
     }
     window.addEventListener('hashchange', (e)=> {
       // hash值发生改变
-      eventId = this.props.location.query.eventId || '49';
-      type = this.props.location.query.type || 'event';
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId: eventId });
+      eventId = this.props.location.query.eventId || '';
+      type = this.props.location.query.type || 'lesson';
       this.props.dispatch({ type: 'Index/getNewLesson'});
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId: eventId,callback: this.createPlayer });
     }, false);
   }
-
-  componentDidMount() {
-    $(() => {
-      player = new YKU.Player('youkuplayer', {
-        styleid: '0',
-        client_id: 'ce68c2e986caab6e',
-        vid: 'XMTg5NjQ5MDY5Ng==',
-        newPlayer: true,
-        autoplay: false,
+  createPlayer(vid){
+      $(() => {
+          player = new YKU.Player('youkuplayer', {
+              styleid: '0',
+              client_id: 'ce68c2e986caab6e',
+              vid: vid,
+              newPlayer: true,
+              autoplay: false,
+          });
       });
-    });
   }
   myReplace(str) {
     if (str) {
@@ -79,7 +79,11 @@ class VideoPage extends React.Component {
             {
               lessonList ? lessonList.map((item) => {
                 return (
-                  <a className={styles.vd_item} href={`#/video?eventId=${item.eventId ? item.eventId : ''}&type=${type}`}>
+                  <a
+                      className={styles.vd_item}
+                      href={`#/video?eventId=${item.eventId ? item.eventId : ''}&type=${type}`}
+                      onClick={ this.createPlayer(Item.videoId)}
+                  >
                     <img
                       alt=""
                       src={item.imageI}
@@ -97,11 +101,11 @@ class VideoPage extends React.Component {
         </div>
         <div className={Footer.footer} id="footer">
           {
-            Item.activityId ? <a href={`#/?eventId=${ Item.activityId }`} >活动简介</a> :
+            Item.activityId ? <a href={`#/?eventId=${ Item.activityId }&type=${type}&lessonId=${eventId}`} >活动简介</a> :
               <a href="javascript:void(0)">活动简介</a>
           }
           {
-            Item.activityId ? <a href={`#/item?eventId=${ Item.activityId}`}>活动议程</a> :
+            Item.activityId ? <a href={`#/item?eventId=${ Item.activityId}&type=${type}&lessonId=${eventId}`}>活动议程</a> :
               <a href="javascript:void(0)">活动议程</a>
           }
 

@@ -57,6 +57,11 @@ class RegisterPage extends React.Component {
         }
     };
     getName(e){
+      console.log('e.target.value', e.target.value);
+      console.log('this.props.Index.submitInfo.userName',this.props.Index.submitInfo.userName);
+      if( e.target.value !== this.props.Index.submitInfo.userName){
+        console.log('此时应该允许提交');
+      }
       const oriInfo = this.state.info;
       oriInfo.userName = e.target.value;
       this.setState({
@@ -64,6 +69,11 @@ class RegisterPage extends React.Component {
       });
     }
     getPhone(e){
+      console.log('e.target.value', e.target.value);
+      console.log('this.props.Index.submitInfo.mobile',this.props.Index.submitInfo.mobile);
+      if( e.target.value !== this.props.Index.submitInfo.mobile){
+          console.log('此时应该允许提交');
+      }
       const oriInfo = this.state.info;
       oriInfo.mobile = e.target.value;
       this.setState({
@@ -71,7 +81,9 @@ class RegisterPage extends React.Component {
       });
     }
     handleSubmit(){
+      console.log('用户点击了提交按钮');
       const info = this.state.info;
+      console.log('提交的信息是：：', info);
       if( !info.userName ){
         this.setState({
           nameRight: false
@@ -107,7 +119,6 @@ class RegisterPage extends React.Component {
   render() {
     const Item = this.props.Index.eventData.data;
    // alert(JSON.stringify(Item));
-      console.log('Item', Item);
     return (
       <div className={styles.bg_white}>
         <div className={styles.wrap94}>
@@ -153,7 +164,12 @@ class RegisterPage extends React.Component {
                 />
               </div>
               <div style={{ color:'red', paddingLeft:'25%', display:this.state.mobileRight?'none': 'block'}}>请您仔细查看电话是否填写</div>
-              <input type="button" className={styles.sg_sub} value="签 到" id="btn_reg" onClick={ this.handleSubmit} disabled={this.props.Index.isChecked}/>
+              <input
+                  type="button"
+                  className={styles.sg_sub}
+                  value="签 到" id="btn_reg"
+                  onClick={ this.handleSubmit}
+              />
             </div>
             <div id="div_baoming" style={{ display: 'none' }}>
               <input type="submit" className={styles.sg_sub} value="提 交" id="btn_baoming" />

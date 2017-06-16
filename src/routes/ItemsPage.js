@@ -13,7 +13,7 @@ class ItemsPage extends React.Component {
   }
 
   componentWillMount() {
-    eventId = this.props.location.query.eventId || '49';
+    eventId = this.props.location.query.eventId || '';
     type = this.props.location.query.type || 'event';
     this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
   }
@@ -57,7 +57,6 @@ class ItemsPage extends React.Component {
             <img alt="" src="http://event.open.alipay.com/anttalk/M/images/ab2_pos.png" className={styles.ico} />
             <span id="v_event_address">{Item.address?this.myReplace(Item.address):''}</span>
           </div>
-          <a href={`#/video${Item.eventId?Item.eventId:''}`} className={styles.play} id="v_view" style={{ display: type == 'event'?'none':'block' }}>在线观看</a>
           <div className={styles.clear} />
         </div>
         <div id="itemList">
@@ -75,11 +74,14 @@ class ItemsPage extends React.Component {
           </div>
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${ this.props.location.query.eventId}&${type}`} >活动简介</a>
-          <a href={`#/item?eventId=${ this.props.location.query.eventId}&${type}`} className={Footer.hover}>活动议程</a>
+          <a href={`#/?eventId=${ eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}`} >活动简介</a>
+          <a href={`#/item?eventId=${eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}`} className={Footer.hover}>活动议程</a>
           {
-            Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:
-              <a href={`#/register?eventId=${ this.props.location.query.eventId}&${type}`}>立即报名</a>
+              type == 'event'? (
+                      Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:
+                          (Item.signuprequestVo?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已报名</a>:<a href={`#/register?eventId=${ this.props.location.query.eventId}&type=${type}` }>立即报名</a>)
+                  ):
+                  <a href={`#/video?eventId=${this.props.location.query.lessonId}&type=${type}`}>在线观看</a>
           }
         </div>
         <div className={Footer.footer_zw} />

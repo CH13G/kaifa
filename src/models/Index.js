@@ -5,8 +5,10 @@ import {
   eventDetail,
   getLessonDetail,
   getNewLesson,
-  checkIn
-} from "../services/Event";
+  checkIn}
+  from "../services/Event";
+import { selectUser } from '../services/Register';
+
 export default {
   namespace: 'Index',
   state: {
@@ -20,6 +22,8 @@ export default {
     },
     lessonList:[],
     isChecked: false,
+    submitInfo: {},
+    userDetail: {}
   },
   reducers: {
     setState(state, action) {
@@ -30,9 +34,16 @@ export default {
     *getEventDetail(action, {put, call}){
       if(action.eventId){
         const data =yield call(eventDetail, action.eventId);
-        console.log('获取活动详情', data);
         if( data.data.status === '0000' ) {
           // alert(1111)
+            console.log('请求用户信息');
+            console.log(data.data.data.status == 'NOT_BEGIN');
+            console.log( !data.data.data.signuprequestVo);
+          if(data.data.data.status == 'NOT_BEGIN' && !data.data.data.signuprequestVo){
+              yield put({
+                  type:'getUserInfo'
+              });
+          }
           yield put({
             type: "setState",
             eventData: {
@@ -49,10 +60,10 @@ export default {
     },
     *getLessonDetail(action, { put, call }) {
       const data = yield call(getLessonDetail, action.eventId);
-      console.log('data', data);
       if(data){
         if( data.data.status === '0000' ) {
           // alert(1111)
+          action.callback( data.data.data.videoId );
           yield put({
             type: "setState",
             lessonData: {
@@ -98,14 +109,16 @@ export default {
         if(data.data.status == "3003"){
             yield put({
                 type: "setState",
-                isChecked: true
+                isChecked: true,
+                submitInfo: action.info
             });
             alert('您已成功签到，请不要重复签到！');
         }
         if(data.data.status == "0000"){
             yield put({
                 type: "setState",
-                isChecked: true
+                isChecked: true,
+                submitInfo: action.info
             });
             alert('恭喜您，您已成功签到！');
         }
@@ -130,7 +143,13 @@ export default {
           });
         alert('后台出错，请您刷新后重试，或者检查您的网络是否连接！');
       }
-    }
+    },
+  *getUserInfo(action, { put, call }) {
+      const data = yield call(selectUser);
+      if (data.data !== null) {
+          yield put({ type: 'setState', userDetail: data.data.data });
+      }
+  },
   },
   subscriptions: {},
 };
