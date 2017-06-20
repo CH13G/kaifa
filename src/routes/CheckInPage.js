@@ -31,7 +31,7 @@ class RegisterPage extends React.Component {
   }
   componentWillMount() {
     let eventId = this.props.location.query.eventId || '49';
-    //alert(eventId);
+    // alert(eventId);
     this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
   }
     myReplace(str){

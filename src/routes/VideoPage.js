@@ -10,6 +10,9 @@ let type = 'lesson';
 class VideoPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      lessonName: ''
+    }
     this.createPlayer = this.createPlayer.bind( this );
   }
   componentWillMount() {
@@ -22,11 +25,23 @@ class VideoPage extends React.Component {
       this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: this.createPlayer});
     }
     window.addEventListener('hashchange', (e)=> {
+      // alert(1111);
       // hash值发生改变
       eventId = this.props.location.query.eventId || '';
       type = this.props.location.query.type || 'lesson';
-      this.props.dispatch({ type: 'Index/getNewLesson'});
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId: eventId,callback: this.createPlayer });
+      this.createPlayer(this.props.location.query.vid);
+      this.props.dispatch({ type: 'Index/setState', lessonName: this.props.location.query.lessonName});
+      for( let i = 0; i< this.props.Index.lessonList.length; i++){
+        if( this.props.Index.lessonList[i].eventId == eventId){
+          this.props.dispatch({
+            type:'Index/setState',
+            lessonData: {
+              lessonId: eventId,
+              data:this.props.Index.lessonList[i],
+              lessonName: encodeURIComponent(this.props.Index.lessonList[i])
+            } });
+        }
+      }
     }, false);
   }
   createPlayer(vid){
@@ -65,15 +80,13 @@ class VideoPage extends React.Component {
   render() {
     const Item = this.props.Index.lessonData.data;
     const lessonList = this.props.Index.lessonList;
-    console.log('活动详情', Item);
-    console.log('最新活动', lessonList);
+    // console.log('活动详情', Item);
+    // console.log('最新活动', lessonList);
     return (
       <div className={styles.bg_white}>
         <div id="youkuplayer" className={styles.video_play} style={{ width: '100%', height: '180px' }} />
         <div className={styles.wrap96}>
-
-          <div className={styles.vd_name} id="session_name">{ Item.eventName ? this.myReplace(Item.eventName) : '' }</div>
-
+          <div className={styles.vd_name} id="session_name">{ this.props.Index.lessonName ? this.myReplace(decodeURIComponent(this.props.Index.lessonName)) : (Item.eventName ? this.myReplace(Item.eventName):'' ) }</div>
           <div className={styles.vd_title}>最新课程</div>
           <div id="sessionList">
             {
@@ -81,8 +94,7 @@ class VideoPage extends React.Component {
                 return (
                   <a
                       className={styles.vd_item}
-                      href={`#/video?eventId=${item.eventId ? item.eventId : ''}&type=${type}`}
-                      onClick={ this.createPlayer(Item.videoId)}
+                      href={`#/video?eventId=${item.eventId ? item.eventId : ''}&type=${type}&vid=${item.videoId}&lessonName=${encodeURIComponent(item.eventName)}`}
                   >
                     <img
                       alt=""
@@ -101,11 +113,11 @@ class VideoPage extends React.Component {
         </div>
         <div className={Footer.footer} id="footer">
           {
-            Item.activityId ? <a href={`#/?eventId=${ Item.activityId }&type=${type}&lessonId=${eventId}`} >活动简介</a> :
+            Item.activityId ? <a href={`#/?eventId=${ Item.activityId }&type=${type}&lessonId=${eventId}&vid=${Item.videoId}`} >活动简介</a> :
               <a href="javascript:void(0)">活动简介</a>
           }
           {
-            Item.activityId ? <a href={`#/item?eventId=${ Item.activityId}&type=${type}&lessonId=${eventId}`}>活动议程</a> :
+            Item.activityId ? <a href={`#/item?eventId=${ Item.activityId}&type=${type}&lessonId=${eventId}&vid=${Item.videoId}`}>活动议程</a> :
               <a href="javascript:void(0)">活动议程</a>
           }
 
@@ -114,7 +126,7 @@ class VideoPage extends React.Component {
                 Item.status == 'FINISHED' ? <a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a> :
                 <a href={`#/register?eventId=${this.props.location.query.eventId}&type=${type}`} className={Footer.hover}>立即报名</a>
               ) :
-                <a href={`#/video?eventId=${Item.eventId ? Item.eventId : ''}&type=${type}`} className={Footer.hover}>在线观看</a>
+                <a href={`#/video?eventId=${Item.eventId ? Item.eventId : ''}&type=${type}&vid=${Item.videoId}`} className={Footer.hover}>在线观看</a>
           }
         </div>
         <div className={Footer.footer_zw} />

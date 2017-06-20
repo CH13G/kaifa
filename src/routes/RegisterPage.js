@@ -57,7 +57,23 @@ class RegisterPage extends React.Component {
   submit = () => {
     this.props.form.validateFields((error, value) => {
       if (!error) {
+        console.log('value',value);
+        if(!/^1\d{10}$/.test(value.mobile) && !/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value.email)){
+          alert('请您填写正确的手机号码和邮箱！');
+          return;
+        }
+        if( !/^1\d{10}$/.test(value.mobile) && /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value.email) ){
+          alert('请您填写正确的手机号码！');
+          return;
+        }
+        if( /^1\d{10}$/.test(value.mobile) && !/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test(value.email) ){
+          alert('请您填写正确的邮箱！');
+          return;
+        }
         this.props.dispatch({ type: 'Register/submitForm', data: { eventId, ...value }, callback: this.goto });
+      }else{
+        console.log('error',error);
+        console.log('刷新页面');
       }
     });
   }
@@ -66,7 +82,7 @@ class RegisterPage extends React.Component {
       alert('报名成功，将为您跳转至活动简介！');
       window.location.href = `#/?eventId=${eventId}&type=${type}`;
     }else{
-        alert('报名失败，将为您刷新页面！');
+      alert('报名失败，将为您刷新页面！');
       window.location.reload();
     }
   }
@@ -139,7 +155,8 @@ class RegisterPage extends React.Component {
                 {...getFieldProps('mobile', {
                   rules: [{ required: true, message: '手机号不可为空' }],
                   onChange: this.setData,
-                  initialValue: userInfo.mobile||''
+                  initialValue: userInfo.mobile||'',
+                  pattern:/^1\d{10}$/
                 })}
                 type="text" className={styles.text} id="mobile" defaultValue={userInfo.mobile||''}
               />
@@ -155,7 +172,8 @@ class RegisterPage extends React.Component {
                 {...getFieldProps('email', {
                   rules: [{ required: true, message: '邮箱不可为空' }],
                   onChange: this.setData,
-                  initialValue: userInfo.email||''
+                  initialValue: userInfo.email||'',
+                  pattern:/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
                 })}
                 type="text" className={styles.text} id="email" defaultValue={userInfo.email||''}
               />

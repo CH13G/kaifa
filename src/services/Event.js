@@ -8,7 +8,8 @@ import qs from 'qs';
  * 获取活动详情
  * */
 export async function eventDetail(eventId) {
-  //alert(eventId);
+  // alert('调用接口');
+  // alert(eventId);
   return request(`${config.baseUrl}/activityDetail.json`, {
     method: 'POST',
     credentials: 'same-origin',mode:"same-origin",

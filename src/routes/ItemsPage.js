@@ -81,7 +81,7 @@ class ItemsPage extends React.Component {
                       Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:
                           (Item.signuprequestVo?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已报名</a>:<a href={`#/register?eventId=${ this.props.location.query.eventId}&type=${type}` }>立即报名</a>)
                   ):
-                  <a href={`#/video?eventId=${this.props.location.query.lessonId}&type=${type}`}>在线观看</a>
+                  <a href={`#/video?eventId=${this.props.location.query.lessonId}&type=${type}&vid=${this.props.location.query.vid}`}>在线观看</a>
           }
         </div>
         <div className={Footer.footer_zw} />

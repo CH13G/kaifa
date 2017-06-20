@@ -23,7 +23,8 @@ export default {
     lessonList:[],
     isChecked: false,
     submitInfo: {},
-    userDetail: {}
+    userDetail: {},
+    lessonName: ''
   },
   reducers: {
     setState(state, action) {
@@ -36,9 +37,8 @@ export default {
         const data =yield call(eventDetail, action.eventId);
         if( data.data.status === '0000' ) {
           // alert(1111)
-            console.log('请求用户信息');
-            console.log(data.data.data.status == 'NOT_BEGIN');
-            console.log( !data.data.data.signuprequestVo);
+          // alert('接口已经调用结束');
+          //  alert(action.eventId);
           if(data.data.data.status == 'NOT_BEGIN' && !data.data.data.signuprequestVo){
               yield put({
                   type:'getUserInfo'
@@ -68,7 +68,8 @@ export default {
             type: "setState",
             lessonData: {
               lessonId: action.eventId,
-              data: data.data.data
+              data: data.data.data,
+              lessonName: encodeURIComponent(data.data.data.eventName)
             },
           });
         }
