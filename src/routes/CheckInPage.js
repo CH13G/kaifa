@@ -128,7 +128,7 @@ class RegisterPage extends React.Component {
             </div>
             <div className={styles.sg_top} id="div_event">
               <p><span>活动名称：</span>{Item.eventName?this.myReplace(Item.eventName):''}</p>
-              <p><span>时间：</span>{(Item.startTime?new Date(parseInt(Item.startTime, 10)):new Date()).toLocaleString().replace(/\//g, '-')}</p>
+              <p><span>时间：</span>{(Item.startTime?new Date(parseInt(Item.startTime, 10)):new Date()).toLocaleString().replace(/\//g, '-').replace('GMT+8','')}</p>
               <p><span>地点：</span>{Item.address?this.myReplace(Item.address):''}</p>
             </div>
             <div id="div_reg">

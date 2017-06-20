@@ -68,7 +68,7 @@ class IndexPage extends React.Component {
               />活动介绍
             </div>
             <div className={styles.inf}>
-              {Item.detailInformation?this.myReplace(Item.detailInformation):''}
+              {Item.eventDesc?this.myReplace(Item.eventDesc):''}
             </div>
             <div className={styles.clear} />
           </div>
