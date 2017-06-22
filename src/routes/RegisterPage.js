@@ -108,6 +108,16 @@ class RegisterPage extends React.Component {
           .replace(/\\\\;/g, '\\');
     }
   }
+  formatTime(time){
+    const myDate = new Date(time);
+    const year=myDate.getFullYear();
+    const month=myDate.getMonth()+1;
+    const date=myDate.getDate();
+    const hour=myDate.getHours();
+    const minute=myDate.getMinutes();
+    const second=myDate.getSeconds();
+    return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
+  }
   render() {
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
@@ -122,7 +132,7 @@ class RegisterPage extends React.Component {
             </div>
           <div className={styles.sg_top} id="div_event">
             <p><span>活动名称：</span>{this.myReplace(Register.activityDetail.eventName) || ''}</p>
-            <p><span>时间：</span>{Register.activityDetail.eventName ? new Date(Register.activityDetail.startTime).toLocaleString().replace('GMT+8','') : ''}</p>
+            <p><span>时间：</span>{Register.activityDetail.startTime ? this.formatTime(Register.activityDetail.startTime) : ''}</p>
             <p><span>地点：</span>{this.myReplace(Register.activityDetail.address) || ''}</p>
           </div>
           <div id="div_reg">
