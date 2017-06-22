@@ -46,15 +46,15 @@ class VideoPage extends React.Component {
   }
   createPlayer(vid){
     console.log('vid',vid);
-      // $(() => {
-      //     player = new YKU.Player('youkuplayer', {
-      //         styleid: '0',
-      //         client_id: 'ce68c2e986caab6e',
-      //         vid: vid,
-      //         newPlayer: true,
-      //         autoplay: false,
-      //     });
-      // });
+      $(() => {
+          player = new YKU.Player('youkuplayer', {
+              styleid: '0',
+              client_id: 'ce68c2e986caab6e',
+              vid: vid,
+              newPlayer: true,
+              autoplay: false,
+          });
+      });
   }
   myReplace(str) {
     if (str) {
