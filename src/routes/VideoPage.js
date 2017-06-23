@@ -43,15 +43,20 @@ class VideoPage extends React.Component {
     }
   }
   createPlayer(vid){
-      $(() => {
-        player = new YKU.Player('youkuplayer', {
-          styleid: '0',
-          client_id: 'ce68c2e986caab6e',
-          vid: vid,
-          newPlayer: true,
-          autoplay: false,
-        });
-      });
+      //$(() => {
+      alert( document.getElementById("youkuplayer") )
+      try {
+          var ply = new YKU.Player('youkuplayer', {
+            styleid: '0',
+            client_id: 'ce68c2e986caab6e',
+            vid: vid,
+            newPlayer: true,
+            autoplay: false,
+          });
+      } catch ( e ) {
+          alert("player undefined ......",e)
+      }
+      //});
   }
   componentDidMount() {
     this.createPlayer(this.props.location.query.vid);
