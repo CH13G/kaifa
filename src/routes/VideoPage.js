@@ -1,8 +1,6 @@
 /* eslint-disable no-plusplus, global-require */
 import React from 'react';
 import { connect } from 'dva';
-import { createForm } from 'rc-form';
-import $ from 'jquery';
 import styles from './VideoPage.less';
 import Footer from './footer.less';
 
