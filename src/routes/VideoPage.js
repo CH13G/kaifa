@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
+import $ from 'jquery';
 import styles from './VideoPage.less';
 import Footer from './footer.less';
 
@@ -16,14 +17,6 @@ class VideoPage extends React.Component {
     this.createPlayer = this.createPlayer.bind( this );
   }
   componentWillMount() {
-    eventId = this.props.location.query.eventId || '';
-    type = this.props.location.query.type || 'lesson';
-    if (type == 'event') {
-      this.props.dispatch({ type: 'Index/getEventDetail', eventId });
-    } else {
-      this.props.dispatch({ type: 'Index/getNewLesson' });
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: this.createPlayer});
-    }
     window.addEventListener('hashchange', (e)=> {
       // alert(1111);
       // hash值发生改变
@@ -43,18 +36,26 @@ class VideoPage extends React.Component {
         }
       }
     }, false);
+    eventId = this.props.location.query.eventId || '';
+    type = this.props.location.query.type || 'lesson';
+    if (type == 'event') {
+      this.props.dispatch({ type: 'Index/getEventDetail', eventId });
+    } else {
+      this.props.dispatch({ type: 'Index/getNewLesson' });
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: this.createPlayer});
+    }
   }
   createPlayer(vid){
-    console.log('vid',vid);
-      $(() => {
-          player = new YKU.Player('youkuplayer', {
-              styleid: '0',
-              client_id: 'ce68c2e986caab6e',
-              vid: vid,
-              newPlayer: true,
-              autoplay: false,
-          });
-      });
+    // console.log('vid',vid);
+    //   $(() => {
+    //   });
+    player = new YKU.Player('youkuplayer', {
+      styleid: '0',
+      client_id: 'ce68c2e986caab6e',
+      vid: vid,
+      newPlayer: true,
+      autoplay: false,
+    });
   }
   myReplace(str) {
     if (str) {
