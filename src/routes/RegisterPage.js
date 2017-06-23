@@ -199,7 +199,8 @@ class RegisterPage extends React.Component {
                   {...getFieldProps('profession', {
                     rules: [{ required: true, message: '行业不可为空' }],
                     onChange: this.setData,
-                    initialValue: userInfo.profession||''
+                    initialValue: userInfo.profession||'',
+                    onClick: (e)=>{ e.preventDefault();}
                   })}
                   id="profession" defaultValue={userInfo.profession||''}
                 >
@@ -259,7 +260,8 @@ class RegisterPage extends React.Component {
                   {...getFieldProps('title', {
                     rules: [{ required: true, message: '职位不可为空' }],
                     onChange: this.setData,
-                    initialValue: userInfo.title||''
+                    initialValue: userInfo.title||'',
+                    onClick: (e)=>{ e.preventDefault();}
                   })}
                   id="title" defaultValue={userInfo.title||''}
                 >
@@ -288,7 +290,8 @@ class RegisterPage extends React.Component {
                 <select
                   {...getFieldProps('province', {
                     onChange: this.setData,
-                      initialValue: userInfo.province||''
+                    initialValue: userInfo.province||'',
+                    onClick: (e)=>{ e.preventDefault();}
                   })}
                   id="province" defaultValue={userInfo.province||''}
                 >

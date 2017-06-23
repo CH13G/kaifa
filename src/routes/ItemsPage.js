@@ -74,8 +74,8 @@ class ItemsPage extends React.Component {
           </div>
         </div>
         <div className={Footer.footer} id="footer">
-          <a href={`#/?eventId=${ eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}`} >活动简介</a>
-          <a href={`#/item?eventId=${eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}`} className={Footer.hover}>活动议程</a>
+          <a href={`#/?eventId=${ eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}&vid=${this.props.location.query.vid}`} >活动简介</a>
+          <a href={`#/item?eventId=${eventId}&type=${type}&lessonId=${this.props.location.query.lessonId}&vid=${this.props.location.query.vid}`} className={Footer.hover}>活动议程</a>
           {
               type == 'event'? (
                       Item.status == 'FINISHED'?<a href="javascript:void(0)" id="bm" className={Footer.a3}>已结束</a>:
