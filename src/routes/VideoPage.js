@@ -39,7 +39,7 @@ class VideoPage extends React.Component {
       this.props.dispatch({ type: 'Index/getEventDetail', eventId });
     } else {
       this.props.dispatch({ type: 'Index/getNewLesson' });
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: this.createPlayer});
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: ()=>{ console.log(11111111111111);}});
     }
   }
   createPlayer(vid){
