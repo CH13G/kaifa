@@ -24,7 +24,8 @@ export default {
     isChecked: false,
     submitInfo: {},
     userDetail: {},
-    lessonName: ''
+    lessonName: '',
+    isPlay: false
   },
   reducers: {
     setState(state, action) {
@@ -63,13 +64,13 @@ export default {
       if(data){
         if( data.data.status === '0000' ) {
           // alert(1111)
-          action.callback( data.data.data.videoId );
+          // action.callback( data.data.data.videoId );
           yield put({
             type: "setState",
             lessonData: {
               lessonId: action.eventId,
               data: data.data.data,
-              lessonName: encodeURIComponent(data.data.data.eventName)
+              lessonName: encodeURIComponent(data.data.data.eventName),
             },
           });
         }
