@@ -20,6 +20,7 @@ class VideoPage extends React.Component {
       // hash值发生改变
       eventId = this.props.location.query.eventId || '';
       type = this.props.location.query.type || 'lesson';
+      this.createPlayer(this.props.location.query.vid);
       this.props.dispatch({ type: 'Index/setState', lessonName: this.props.location.query.lessonName});
       for( let i = 0; i< this.props.Index.lessonList.length; i++){
         if( this.props.Index.lessonList[i].eventId == eventId){
@@ -33,18 +34,17 @@ class VideoPage extends React.Component {
         }
       }
     }, false);
+
     eventId = this.props.location.query.eventId || '';
     type = this.props.location.query.type || 'lesson';
     if (type == 'event') {
       this.props.dispatch({ type: 'Index/getEventDetail', eventId });
     } else {
       this.props.dispatch({ type: 'Index/getNewLesson' });
-      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,callback: ()=>{ console.log(11111111111111);}});
+      this.props.dispatch({ type: 'Index/getLessonDetail', eventId,});
     }
   }
   createPlayer(vid){
-      //$(() => {
-      alert( document.getElementById("youkuplayer") )
       try {
           var ply = new YKU.Player('youkuplayer', {
             styleid: '0',
