@@ -20,7 +20,6 @@ class VideoPage extends React.Component {
       // hash值发生改变
       eventId = this.props.location.query.eventId || '';
       type = this.props.location.query.type || 'lesson';
-      this.createPlayer(this.props.location.query.vid);
       this.props.dispatch({ type: 'Index/setState', lessonName: this.props.location.query.lessonName});
       for( let i = 0; i< this.props.Index.lessonList.length; i++){
         if( this.props.Index.lessonList[i].eventId == eventId){
@@ -53,6 +52,9 @@ class VideoPage extends React.Component {
           autoplay: false,
         });
       });
+  }
+  componentDidMount() {
+    this.createPlayer(this.props.location.query.vid);
   }
   myReplace(str) {
     if (str) {
