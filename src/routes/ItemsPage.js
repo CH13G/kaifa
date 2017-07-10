@@ -54,7 +54,7 @@ class ItemsPage extends React.Component {
         <div className={styles.top}>
           <div className={styles.title} id="v_event_name">{Item.eventName?this.myReplace(Item.eventName):''}</div>
           <div className={styles.pos}>
-            <img alt="" src="http://event.open.alipay.com/anttalk/M/images/ab2_pos.png" className={styles.ico} />
+            <img alt="" src="https://gw.alipayobjects.com/zos/rmsportal/IoGeTZfNnbJuRFghOwnk.png" className={styles.ico} />
             <span id="v_event_address">{Item.address?this.myReplace(Item.address):''}</span>
           </div>
           <div className={styles.clear} />
