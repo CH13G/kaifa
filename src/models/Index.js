@@ -8,7 +8,8 @@ import {
   checkIn}
   from "../services/Event";
 import { selectUser } from '../services/Register';
-
+import { Toast} from 'antd-mobile';
+import qs from 'qs';
 export default {
   namespace: 'Index',
   state: {
@@ -115,28 +116,40 @@ export default {
                 submitInfo: action.info
             });
             alert('您已成功签到，请不要重复签到！');
-        }
-        if(data.data.status == "0000"){
+        }else if(data.data.status == "0000"){
             yield put({
                 type: "setState",
                 isChecked: true,
                 submitInfo: action.info
             });
             alert('恭喜您，您已成功签到！');
-        }
-        if(data.data.status == "3002"){
+        }else if(data.data.status == "1001"){
             yield put({
                 type: "setState",
                 isChecked: false
             });
-            alert('签到失败，请您确认是否报名该活动，并已审核通过！');
-        }
-        if(data.data.status == "2002"){
+            alert('活动不存在或者活动已删除');
+        }else if(data.data.status == "3002"){
+            yield put({
+                type: "setState",
+                isChecked: false
+            });
+            const onClose=()=>{
+              window.location.href=`/?eventId=${qs.parse(window.location.href.split('?')[1]).eventId}`
+            }
+            Toast.info('亲！未查询到您的报名信息，请先完成活动报名', 3, onClose, true)
+        }else if(data.data.status == "2002"){
             yield put({
                 type: "setState",
                 isChecked: false
             });
           alert('签到失败，请您仔细核对填写的信息!');
+        }else{
+           yield put({
+                type: "setState",
+                isChecked: false
+            });
+          alert('签到失败');
         }
       }else{
           yield put({
