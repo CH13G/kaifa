@@ -70,7 +70,7 @@ class RegisterPage extends React.Component {
           alert('请您填写正确的邮箱！');
           return;
         }
-        this.props.dispatch({ type: 'Register/submitForm', data: { eventId, ...value }, callback: this.goto });
+        this.props.dispatch({ type: 'Register/submitForm', data: { eventId, ...value ,channelCode:this.props.Index.channelCode}, callback: this.goto });
       }else{
         console.log('error',error);
         console.log('刷新页面');
@@ -84,6 +84,7 @@ class RegisterPage extends React.Component {
     }else{
       alert('报名失败，将为您刷新页面！');
       window.location.reload();
+      
     }
   }
   myReplace(str) {
@@ -119,6 +120,7 @@ class RegisterPage extends React.Component {
     return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second;
   }
   render() {
+    let channelCode=localStorage.getItem('channelCode')
     let errors;
     const { getFieldProps, getFieldError } = this.props.form;
     const { Register } = this.props;
@@ -247,6 +249,12 @@ class RegisterPage extends React.Component {
                   initialValue: userInfo.company||''
                 })}
                 type="text" className={styles.text} id="company" defaultValue={userInfo.company||''}
+              />
+              <input
+                {...getFieldProps('channelCode', {
+                  initialValue: channelCode
+                })}
+                type="text" className={styles.text} id="channelCode" style={{display:'none'}}
               />
             </div>
             <div className={styles.errorTips}>{(errors = getFieldError('company')) ? errors.join(',') : null}</div>

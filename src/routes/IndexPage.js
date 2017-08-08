@@ -4,7 +4,7 @@ import { createForm } from 'rc-form';
 
 import styles from './IndexPage.less';
 import Footer from './footer.less';
-
+import qs from 'qs'
 let eventId = '';
 let type = 'event';
 class IndexPage extends React.Component {
@@ -15,6 +15,7 @@ class IndexPage extends React.Component {
     eventId = this.props.location.query.eventId || '';
     type = this.props.location.query.type || 'event';
     this.props.dispatch({ type: 'Index/getEventDetail', eventId: eventId });
+    this.props.dispatch({ type: 'Index/channelCode', channelCode: qs.parse((window.location.href).split('?')[1]).channelCode });
   }
   myReplace(str){
     if(str){
@@ -41,6 +42,7 @@ class IndexPage extends React.Component {
   render() {
     const Item =  this.props.Index.eventData.data;
     console.log('render Item', Item);
+    
     return (
       <div>
         <div className={styles.banner}>
