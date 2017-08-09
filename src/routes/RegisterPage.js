@@ -70,7 +70,7 @@ class RegisterPage extends React.Component {
           alert('请您填写正确的邮箱！');
           return;
         }
-        this.props.dispatch({ type: 'Register/submitForm', data: { eventId, ...value ,channelCode:this.props.Index.channelCode}, callback: this.goto });
+        this.props.dispatch({ type: 'Register/submitForm', data: { eventId, ...value }, callback: this.goto });
       }else{
         console.log('error',error);
         console.log('刷新页面');
@@ -82,8 +82,8 @@ class RegisterPage extends React.Component {
       alert('报名成功，将为您跳转至活动简介！');
       window.location.href = `#/?eventId=${eventId}&type=${type}`;
     }else{
-      alert('报名失败，将为您刷新页面！');
-      window.location.reload();
+       alert('报名失败，将为您刷新页面！');
+       window.location.reload();
       
     }
   }
@@ -254,7 +254,7 @@ class RegisterPage extends React.Component {
                 {...getFieldProps('channelCode', {
                   initialValue: channelCode
                 })}
-                type="text" className={styles.text} id="channelCode" style={{display:'none'}}
+                type="text" className={styles.text} id="channelCode"  defaultValue={channelCode||''} style={{display:'none'}}
               />
             </div>
             <div className={styles.errorTips}>{(errors = getFieldError('company')) ? errors.join(',') : null}</div>
