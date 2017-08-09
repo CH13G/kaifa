@@ -136,7 +136,7 @@ export default {
             isChecked: false
           });
           const onClose = () => {
-            window.location.hash = `/?eventId=${qs.parse(
+            window.location.hash = `/register?eventId=${qs.parse(
               window.location.href.split("?")[1]
             ).eventId}`;
           };
