@@ -127,7 +127,7 @@ class RegisterPage extends React.Component {
     const userInfo = this.props.Index.userDetail || Register.userDetail ||{};
     const userName = userInfo.userName||'';
     return (
-      <div className={styles.bg_white}>
+      <div className={styles.bg_white} style={{fontSize:12}}>
         <div className={styles.wrap94}>
           <div className={styles.sg_title}>
               立即报名

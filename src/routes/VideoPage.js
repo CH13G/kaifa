@@ -91,7 +91,7 @@ class VideoPage extends React.Component {
     // console.log('活动详情', Item);
     // console.log('最新活动', lessonList);
     return (
-      <div className={styles.bg_white}>
+      <div className={styles.bg_white} style={{fontSize:12}}>
         <div id="youkuplayer" className={styles.video_play} style={{ width: '100%', height: '180px' }} />
         <div className={styles.wrap96}>
           <div className={styles.vd_name} id="session_name">{ this.props.Index.lessonName ? this.myReplace(decodeURIComponent(this.props.Index.lessonName)) : (Item.eventName ? this.myReplace(Item.eventName):'' ) }</div>

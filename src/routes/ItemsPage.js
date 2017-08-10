@@ -43,7 +43,7 @@ class ItemsPage extends React.Component {
     console.log('活动的详细信息', this);
     const Item = this.props.Index.eventData.data;
     return (
-      <div>
+      <div style={{fontSize:12}}>
         <div className={styles.banner}>
           <img
             alt=""
@@ -68,7 +68,7 @@ class ItemsPage extends React.Component {
                 className={styles.ico}
               />活动议程
             </div>
-            <div className={styles.inf} dangerouslySetInnerHTML={{__html: this.myReplace(Item.activityFlow)}}>
+            <div className={styles.inf} dangerouslySetInnerHTML={{__html: this.myReplace(Item.activityFlow)}} style={{overflow:'auto'}}>
             </div>
             <div className={styles.clear} />
           </div>

@@ -120,7 +120,7 @@ class RegisterPage extends React.Component {
     const Item = this.props.Index.eventData.data;
    // alert(JSON.stringify(Item));
     return (
-      <div className={styles.bg_white}>
+      <div className={styles.bg_white} style={{fontSize:12}}>
         <div className={styles.wrap94}>
           <form id="form1">
             <div className={styles.sg_title}>

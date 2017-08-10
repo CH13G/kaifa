@@ -44,7 +44,7 @@ class IndexPage extends React.Component {
     console.log('render Item', Item);
     
     return (
-      <div>
+      <div style={{fontSize:12}}>
         <div className={styles.banner}>
           <img
             alt=""
