@@ -147,6 +147,18 @@ export default {
             isChecked: false
           });
           alert("签到失败，请您仔细核对填写的信息!");
+        }else if (data.data.status == "3006") {
+          yield put({
+            type: "setState",
+            isChecked: false
+          });
+          alert("用户申请被拒绝!");
+        }else if (data.data.status == "3007") {
+          yield put({
+            type: "setState",
+            isChecked: false
+          });
+          alert("用户申请正在审核中!");
         } else {
           yield put({
             type: "setState",
