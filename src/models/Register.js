@@ -43,7 +43,7 @@ export default {
     },
     *checkLogin(action, { put, call }) {
       const data = yield call(checkLogin);
-      if (!data.data ) {
+      if (!data.data.data ) {
         window.location.href=('https://ds.alipay.com/?from=mobilecodec&scheme=alipays%3a%2f%2fplatformapi%2fstartapp%3fappId%3d20000067%26url%3d'+encodeURIComponent(window.location.href));
       }
     },
