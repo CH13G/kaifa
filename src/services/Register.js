@@ -36,3 +36,13 @@ export async function selectUser() {
     },
   });
 }
+export async function checkLogin() {
+  return request(`${config.baseUrl}/userLoginVarify.json`, {
+    method: 'GET',
+    credentials: 'same-origin',
+    mode: 'same-origin',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+  });
+}

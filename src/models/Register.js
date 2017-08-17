@@ -1,7 +1,7 @@
 /**
  * Created by wb-mjy275902 on 2017/6/14.
  */
-import { insert, selectActivity, selectUser } from '../services/Register';
+import { insert, selectActivity, selectUser,checkLogin} from '../services/Register';
 
 export default {
   namespace: 'Register',
@@ -41,12 +41,22 @@ export default {
         yield put({ type: 'setState', userDetail: data.data.data });
       }
     },
+    *checkLogin(action, { put, call }) {
+      const data = yield call(checkLogin);
+      if (!data.data ) {
+        window.location.href=('https://ds.alipay.com/?from=mobilecodec&scheme=alipays%3a%2f%2fplatformapi%2fstartapp%3fappId%3d20000067%26url%3d'+encodeURIComponent(window.location.href));
+      }
+    },
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
         if (location.pathname === '/register') {
           dispatch({ type: 'getUserInfo' });
+          
+        }
+        if (location.pathname.substring(0, 1) === "/") {
+          dispatch({ type: 'checkLogin' });
         }
       });
     },
