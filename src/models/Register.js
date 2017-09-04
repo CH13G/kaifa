@@ -48,10 +48,10 @@ export default {
     },
     *checkLogin(action, { put, call }) {
       const data = yield call(checkLogin);
-      if (!data.data.data) {
-        let url = "https://ds.alipay.com/?from=mobilecodec&scheme=alipays%3a%2f%2fplatformapi%2fstartapp%3fappId%3d20000067%26url%3d" +encodeURIComponent(encodeURIComponent(window.location.href));
-        window.location.href=url
-      }
+      // if (!data.data.data) {
+      //   let url = "https://ds.alipay.com/?from=mobilecodec&scheme=alipays%3a%2f%2fplatformapi%2fstartapp%3fappId%3d20000067%26url%3d" +encodeURIComponent(encodeURIComponent(window.location.href));
+      //   window.location.href=url
+      // }
     }
   },
   subscriptions: {

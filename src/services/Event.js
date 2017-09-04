@@ -7,6 +7,8 @@ import qs from 'qs';
 /*
  * 获取活动详情
  * */
+ /* 获取警告信息*/
+
 export async function eventDetail(eventId) {
   // alert('调用接口');
   // alert(eventId);
@@ -61,3 +63,15 @@ export async function checkIn(info) {
         body: qs.stringify(info)
     });
 }
+
+ export async function getNoteInfo() {
+  return request(`${config.baseUrl}/warningMessage.json`, {
+    method: 'GET',
+    credentials: 'same-origin',
+    mode: 'same-origin',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+  });
+ }
+

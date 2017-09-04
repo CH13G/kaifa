@@ -12,6 +12,7 @@ app.model(require('./models/Index'));
 app.model(require('./models/Items'));
 app.model(require('./models/Register'));
 app.model(require('./models/Video'));
+app.model(require('./models/gyh'));
 
 // 4. Router
 app.router(require('./router'));
