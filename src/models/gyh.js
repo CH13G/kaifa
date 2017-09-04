@@ -1,6 +1,6 @@
 import {
   getNoteInfo,
-} from '../services/Event';
+} from '../services';
 
 export default {
   namespace: 'Warning',

@@ -1,9 +1,9 @@
 /**
  * Created by wb-mjy275902 on 2017/6/14.
  */
+import qs from 'qs';
 import request from '../utils/request';
 import config from '../utils/config';
-import qs from 'qs';
 /*
  * 获取活动详情
  * */

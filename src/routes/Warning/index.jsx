@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import style from './style.less';
+import { ellipisName, ellipisPID } from '../../services';
 
 class Title extends React.Component {
   constructor(props) {
@@ -69,11 +70,3 @@ const mapStateToProps = (state) => {
   return { ...state };
 };
 export default connect(mapStateToProps)(Warning);
-
-function ellipisName(str) {
-  return str && `*${str.substr(1)}`;
-}
-
-function ellipisPID(tel) {
-  return tel && tel.replace(/^(\d{4})\d+(\d{4})$/, (match, $1, $2) => `${$1}****${$2}`);
-}
