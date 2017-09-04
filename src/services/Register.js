@@ -4,7 +4,6 @@ import config from '../utils/config';
 
 
 export async function insert(data) {
-
   return request(`${config.baseUrl}/signuprequestInsertOrUpdate.json`, {
     method: 'POST',
     credentials: 'same-origin',

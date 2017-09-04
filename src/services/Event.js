@@ -14,11 +14,12 @@ export async function eventDetail(eventId) {
   // alert(eventId);
   return request(`${config.baseUrl}/activityDetail.json`, {
     method: 'POST',
-    credentials: 'same-origin',mode:"same-origin",
+    credentials: 'same-origin',
+    mode: 'same-origin',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     },
-    body: qs.stringify({eventId:eventId})
+    body: qs.stringify({ eventId }),
   });
 }
 /*
@@ -28,10 +29,10 @@ export async function getLessonDetail(eventId) {
   return request(`${config.baseUrl}/lessonDetail.json?eventId=${eventId}`, {
     method: 'POST',
     credentials: 'same-origin',
-    mode:"same-origin",
+    mode: 'same-origin',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    }
+    },
   });
 }
 /*
@@ -39,32 +40,32 @@ export async function getLessonDetail(eventId) {
 * 获取最新课程
 * */
 export async function getNewLesson(eventId) {
-    return request(`${config.baseUrl}/pageQueryLesson.json?pageNum=1&pageSize=5&orderColumn=NewLesson`, {
-        method: 'POST',
-        credentials: 'same-origin',
-        mode:"same-origin",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        }
-    });
+  return request(`${config.baseUrl}/pageQueryLesson.json?pageNum=1&pageSize=5&orderColumn=NewLesson`, {
+    method: 'POST',
+    credentials: 'same-origin',
+    mode: 'same-origin',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+  });
 }
 /*
  *
  * 签到
  * */
 export async function checkIn(info) {
-    return request(`${config.baseUrl}/joinIn.json`, {
-        method: 'POST',
-        credentials: 'same-origin',
-        mode:"same-origin",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        },
-        body: qs.stringify(info)
-    });
+  return request(`${config.baseUrl}/joinIn.json`, {
+    method: 'POST',
+    credentials: 'same-origin',
+    mode: 'same-origin',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
+    body: qs.stringify(info),
+  });
 }
 
- export async function getNoteInfo() {
+export async function getNoteInfo() {
   return request(`${config.baseUrl}/warningMessage.json`, {
     method: 'GET',
     credentials: 'same-origin',
@@ -73,5 +74,5 @@ export async function checkIn(info) {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
     },
   });
- }
+}
 
