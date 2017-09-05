@@ -42,7 +42,18 @@ module.exports = {
             'time': '2017-08-11',
             'cause': '交易支付跌0'
           }
-        }
+        },
+        'payData': [
+          {"time": '2016-08-08 00:00:00',"tem": 10,"city": "beijing"},
+          {"time": '2016-08-08 00:10:00',"tem": 22,"city": "beijing"},
+          {"time": '2016-08-08 00:30:00',"tem": 16,"city": "beijing"},
+          {"time": '2016-08-09 00:35:00',"tem": 26,"city": "beijing"},
+          {"time": '2016-08-09 01:00:00',"tem": 12,"city": "beijing"},
+          {"time": '2016-08-09 01:20:00',"tem": 26,"city": "beijing"},
+          {"time": '2016-08-10 01:40:00',"tem": 18,"city": "beijing"},
+          {"time": '2016-08-10 02:00:00',"tem": 26,"city": "beijing"},
+          {"time": '2016-08-10 02:20:00',"tem": 12,"city": "beijing"},
+        ],
       })
     }, 200);
   },

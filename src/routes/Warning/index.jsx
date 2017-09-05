@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import _ from 'lodash';
 import { ellipisName, ellipisPID, ellipisCompany } from '#/services';
+import Chart from './Chart';
 import {
   Card,
   WhiteSpace,
@@ -21,7 +22,7 @@ const Title = () => (
   </div>
 );
 
-const NotContent = (props) => {
+const NoteContent = (props) => {
   const data = _.get(props, 'Warning.noteMessage', {});
   return data
     ? (
@@ -44,13 +45,13 @@ const NotContent = (props) => {
     : null;
 };
 
-const Dayta = () => (
+const Dayta = (props) => (
   <div className={style.dayta}>
     <WhiteSpace size="lg" />
     <Card full>
       <Card.Header title="支付创建笔数" />
       <Card.Body>
-        <div>This is content of `Card`</div>
+        <Chart data={props.data} />
       </Card.Body>
       <Card.Footer content="查看完整数据登录云监控（确保本手机登录的支付宝是该签约账号）" />
     </Card>
@@ -58,24 +59,25 @@ const Dayta = () => (
 );
 
 const Buttons = () => (
-  <WingBlank style={{ padding: '.2rem 0' }}>
+  <WingBlank style={{ padding: '.1rem 0' }}>
     <Flex justify="around">
-      <Button className={style.btn} inline size="small" type="primary">loading button</Button>
-      <Button className={style.btn} inline size="small" type="primary" >primary button</Button>
+      <Button className={style.btn} inline size="small" >误报</Button>
+      <Button className={style.btn} inline size="small" type="primary"> 已修复</Button>
     </Flex>
+  <div className={style.accredit}>我不是最合适的处理人，<a href="">授权他人处理</a></div>
   </WingBlank>
 );
 
 const Warning = props => (
   <div>
     <Title />
-    <NotContent {...props} />
-    <Dayta />
+    <NoteContent {...props} />
+    <Dayta data={props.payData} />
     <Buttons />
   </div>
 );
 
 const mapStateToProps = (state) => {
-  return { ...state };
+  return { ...state, payData: state.Warning.payData };
 };
 export default connect(mapStateToProps)(Warning);

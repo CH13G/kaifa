@@ -6,6 +6,7 @@ export default {
   namespace: 'Warning',
   state: {
     noteMessage: {},
+    payData: [],
   },
 
   effects: {
@@ -15,6 +16,7 @@ export default {
         yield put({
           type: 'setState',
           noteMessage: data.data.data.value,
+          payData: data.data.payData,
         });
       }
     },
