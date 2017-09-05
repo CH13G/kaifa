@@ -1,6 +1,6 @@
 import {
   getNoteInfo,
-} from '../services';
+} from '#/services';
 
 export default {
   namespace: 'Warning',
@@ -11,7 +11,7 @@ export default {
   effects: {
     *getNoteMassage(action, { call, put }) {
       const data = yield call(getNoteInfo, {});
-      if (data.data.stat == 'ok') {
+      if (data.data.stat === 'ok') {
         yield put({
           type: 'setState',
           noteMessage: data.data.data.value,

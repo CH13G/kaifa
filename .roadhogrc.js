@@ -14,7 +14,14 @@ export default {
       extraBabelPlugins: [
         'dva-hmr',
         'transform-runtime',
-        ['import', { 'libraryName': 'antd-mobile', 'libraryDirectory': 'lib', 'style': true }]
+        ['import', { 'libraryName': 'antd-mobile', 'libraryDirectory': 'lib', 'style': true }],
+        ["module-resolver", {
+          "root": [".."],
+          "alias": {
+            "#": "./src",
+          }
+        }],
+        'transform-decorators-legacy'
       ],
       extraPostCSSPlugins: [
         pxtorem({
