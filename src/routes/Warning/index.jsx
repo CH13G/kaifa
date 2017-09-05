@@ -21,7 +21,7 @@ const Title = () => (
   </div>
 );
 
-const NotContent = props => {
+const NotContent = (props) => {
   const data = _.get(props, 'Warning.noteMessage', {});
   return data
     ? (
