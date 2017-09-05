@@ -21,7 +21,7 @@ module.exports = {
                     res.json({
                       "stat": "ok",
                       "data": {
-                            "value": {
+                            "value": {"company": "浙江科技股份有限公司",
                                       "title": "浙江信息科技股份有限公司",
                                       "id": "2008123456780012",
                                       "name": "孙红雷",

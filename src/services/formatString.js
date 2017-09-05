@@ -5,3 +5,7 @@ export function ellipisName(str) {
 export function ellipisPID(tel) {
   return tel && tel.replace(/^(\d{4})\d+(\d{4})$/, (match, $1, $2) => `${$1}****${$2}`);
 }
+
+export function ellipisCompany(company) {
+  return company && `${company.substr(0, 2)}*****公司`;
+}

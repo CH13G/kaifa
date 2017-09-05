@@ -5,4 +5,5 @@ export {
 export {
   ellipisName,
   ellipisPID,
+  ellipisCompany,
 } from './formatString';
